@@ -60,7 +60,7 @@ long long factorial(long long x)
     }
 }
 
-void print_binary(unsigned int n) {
+void print_binary(unsigned long long n) {
     if (n > 1) print_binary(n / 2);
     putchar('0' + n % 2);
 }
@@ -72,9 +72,34 @@ void print_binary(unsigned int n) {
 #endif
 
 void pause() {
-    printf("\nНажмите Enter для продолжения...");
+    printf("\n Нажмите Enter для продолжения...");
     while(getchar() != '\n');
     getchar();
+}
+
+int char_to_digit(char c) {
+    if(c>='0' && c<='9') return c-'0';
+    if(c>='a' && c<='z') return c-'a'+10;
+    if(c>='A' && c<='Z') return c-'A'+10;
+    return -1;
+}
+
+unsigned long long horner(const char *num_str, int base) {
+    unsigned long long result = 0;
+    int digit;
+    for (int i = 0; num_str[i] != '\0'; i++) {
+        digit = char_to_digit(num_str[i]);
+        if (digit == -1) {
+            printf("Недопустимый символ '%c' \n", num_str[i]);
+            return (unsigned long long)-1;
+        }
+        if (digit >= base) {
+            printf("%d не подходит для основания %d \n", digit, base);
+            return (unsigned long long)-1;
+        }
+        result = result * base + digit;
+    }
+    return result;
 }
 
 int main(void) {
@@ -92,7 +117,7 @@ int main(void) {
                 break;
             }
             system(CLEAR);
-            while (getchar() != '\n');
+            while (getchar() != '\n')4;
             printf("Введите число.\n");
             printf("Нажмите Enter для продолжения...");
             getchar();
@@ -920,94 +945,191 @@ int main(void) {
                     }
                     if(l == 0) break;
                     switch (l) {
-                        case 1:
+                        case 1: {
+                            int base;
+                            char numstr[256];
+                            unsigned long long decimal;
                             while (1) {
                                 system(CLEAR);
-                                printf("Введите число: ");
-                                check = scanf("%d", &c);
+                                printf("Введите основание системы из которой вы хотите перевести в двоичную: ");
+                                check = scanf("%d", &base);
+                                if (check == 1 && base >=2 && base <=36) {
+                                    break;
+                                }
+                                system(CLEAR);
+                                while (getchar() != '\n');
+                                printf("Введите число, удовлетворяющее условию.\n");
+                                printf("Нажмите Enter для продолжения... \n");
+                                getchar();
+                                system(CLEAR);
+                                printf("Введите основание системы из которой вы хотите перевести в двоичную: \n ");
+                            }
+                            while (1) {
+                                system(CLEAR);
+                                printf("Введите число, которое вы хотите перевести в двоичную: ");
+                                check = scanf("%s", numstr);
                                 if (check == 1) {
                                     break;
                                 }
                                 system(CLEAR);
                                 while (getchar() != '\n');
-                                printf("Введите число.\n");
+                                printf("Введите число, удовлетворяющее условию.\n");
                                 printf("Нажмите Enter для продолжения... \n");
                                 getchar();
                                 system(CLEAR);
-                                printf("Введите число: \n ");
+                                printf("Введите число, которое вы хотите перевести в двоичную: \n");
+                            }
+                            while (getchar() != '\n'); // убираем возможный лишний \n чисткой буфера
+                            decimal = horner(numstr, base);
+                            if (decimal == (unsigned long long)-1) {
+                                break;
                             }
                             system(CLEAR);
                             printf("Ответ: ");
-                            print_binary(c);
-                            pause();
+                            print_binary(decimal);
+                            printf("\n Нажмите Enter для продолжения...");
+                            while(getchar() != '\n');
                             break;
-                        case 2:
+                        }
+                        case 2: {
+                            int base;
+                            char numstr[256];
+                            unsigned long long decimal;
                             while (1) {
                                 system(CLEAR);
-                                printf("Введите число: ");
-                                check = scanf("%d", &c);
+                                printf("Введите основание системы из которой вы хотите перевести в восьмиричную: ");
+                                check = scanf("%d", &base);
+                                if (check == 1 && base >=2 && base <=36) {
+                                    break;
+                                }
+                                system(CLEAR);
+                                while (getchar() != '\n');
+                                printf("Введите число, удовлетворяющее условию.\n");
+                                printf("Нажмите Enter для продолжения... \n");
+                                getchar();
+                                system(CLEAR);
+                                printf("Введите основание системы из которой вы хотите перевести в восьмиричную: \n ");
+                            }
+                            while (1) {
+                                system(CLEAR);
+                                printf("Введите число, которое вы хотите перевести в восмиричную: ");
+                                check = scanf("%s", numstr);
                                 if (check == 1) {
                                     break;
                                 }
                                 system(CLEAR);
                                 while (getchar() != '\n');
-                                printf("Введите число.\n");
+                                printf("Введите число, удовлетворяющее условию.\n");
                                 printf("Нажмите Enter для продолжения... \n");
                                 getchar();
                                 system(CLEAR);
-                                printf("Введите число: \n ");
+                                printf("Введите число, которое вы хотите перевести в восьмиричную: \n");
+                            }
+                            while (getchar() != '\n'); // убираем возможный лишний \n чисткой буфера
+                            decimal = horner(numstr, base);
+                            if (decimal == (unsigned long long)-1) {
+                                break;
                             }
                             system(CLEAR);
-                            printf("Ответ: %o \n", c);
-                            pause();
-                            break;
-                        case 3:
+                            printf("Ответ: %llo \n", decimal);
+                            printf("\n Нажмите Enter для продолжения...");
+                            while(getchar() != '\n');
+                            break; }
+                        case 3: {
+                            int base;
+                            char numstr[256];
+                            unsigned long long decimal;
                             while (1) {
                                 system(CLEAR);
-                                printf("Введите число: ");
-                                check = scanf("%d", &c);
+                                printf("Введите основание системы из которой вы хотите перевести в десятичную: ");
+                                check = scanf("%d", &base);
+                                if (check == 1 && base >=2 && base <=36) {
+                                    break;
+                                }
+                                system(CLEAR);
+                                while (getchar() != '\n');
+                                printf("Введите число, удовлетворяющее условию.\n");
+                                printf("Нажмите Enter для продолжения... \n");
+                                getchar();
+                                system(CLEAR);
+                                printf("Введите основание системы из которой вы хотите перевести в десятичную: \n ");
+                            }
+                            while (1) {
+                                system(CLEAR);
+                                printf("Введите число, которое вы хотите перевести в десятичную: ");
+                                check = scanf("%s", numstr);
                                 if (check == 1) {
                                     break;
                                 }
                                 system(CLEAR);
                                 while (getchar() != '\n');
-                                printf("Введите число.\n");
+                                printf("Введите число, удовлетворяющее условию.\n");
                                 printf("Нажмите Enter для продолжения... \n");
                                 getchar();
                                 system(CLEAR);
-                                printf("Введите число: \n ");
+                                printf("Введите число, которое вы хотите перевести в десятичную: \n");
+                            }
+                            while (getchar() != '\n'); // убираем возможный лишний \n чисткой буфера
+                            decimal = horner(numstr, base);
+                            if (decimal == (unsigned long long)-1) {
+                                break;
                             }
                             system(CLEAR);
-                            printf("Ответ: %d \n", c);
-                            pause();
-                            break;
-                        case 4:
+                            printf("Ответ: %llu \n", decimal);
+                            printf("\n Нажмите Enter для продолжения...");
+                            while(getchar() != '\n');
+                            break; }
+                        case 4: {
+                            int base;
+                            char numstr[256];
+                            unsigned long long decimal;
                             while (1) {
                                 system(CLEAR);
-                                printf("Введите число: ");
-                                check = scanf("%d", &c);
+                                printf("Введите основание системы из которой вы хотите перевести в шестнадцатиричную: ");
+                                check = scanf("%d", &base);
+                                if (check == 1 && base >=2 && base <=36) {
+                                    break;
+                                }
+                                system(CLEAR);
+                                while (getchar() != '\n');
+                                printf("Введите число, удовлетворяющее условию.\n");
+                                printf("Нажмите Enter для продолжения... \n");
+                                getchar();
+                                system(CLEAR);
+                                printf("Введите основание системы из которой вы хотите перевести в шестнадцатиричную: \n ");
+                            }
+                            while (1) {
+                                system(CLEAR);
+                                printf("Введите число, которое вы хотите перевести в шестнадцатиричную: ");
+                                check = scanf("%s", numstr);
                                 if (check == 1) {
                                     break;
                                 }
                                 system(CLEAR);
                                 while (getchar() != '\n');
-                                printf("Введите число.\n");
+                                printf("Введите число, удовлетворяющее условию.\n");
                                 printf("Нажмите Enter для продолжения... \n");
                                 getchar();
                                 system(CLEAR);
-                                printf("Введите число: \n ");
+                                printf("Введите число, которое вы хотите перевести в шестнадцатиричную: \n");
+                            }
+                            while (getchar() != '\n'); // убираем возможный лишний \n чисткой буфера
+                            decimal = horner(numstr, base);
+                            if (decimal == (unsigned long long)-1) {
+                                break;
                             }
                             system(CLEAR);
-                            printf("Ответ: %x \n", c);
-                            pause();
-                            break;
-                        case 0:
-                            break;
-                        default:
+                            printf("Ответ: %llx \n", decimal);
+                            printf("\n Нажмите Enter для продолжения...");
+                            while(getchar() != '\n');
+                            break; }
+                        case 0: {
+                            break; }
+                        default: {
                             system(CLEAR);
                             printf("Введите корректное число \n");
                             pause();
-                            break;
+                            break; }
                     }
                 }
                 if(l == 0) break;
